@@ -1,0 +1,40 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Other head content -->
+    <link rel="stylesheet" href="{% static 'main/styles.css' %}">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="{% url 'home' %}">Home</a>
+            {% if user.is_authenticated %}
+                {% if user.userprofile.is_doctor %}
+                    <a href="{% url 'doctor_appointments' %}">View My Appointments</a>
+                    <a href="{% url 'view_enquiries' %}">View Enquiries</a>
+                {% else %}
+                    <a href="{% url 'book_appointment' %}">Book Appointment</a>
+                    <a href="{% url 'appointments_view' %}">View Appointments</a>
+                    <a href="{% url 'send_enquiry' %}">Send Enquiries</a>
+                    <a href="{% url 'patient_enquiries' %}">View My Enquiries</a>
+                {% endif %}
+                <a href="{% url 'donate' %}">Donate</a>
+                <a href="{% url 'contact_us' %}">Contact Us</a>
+                <a href="{% url 'logout' %}">Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}">Login</a>
+                <a href="{% url 'register' %}">Register</a>
+            {% endif %}
+        </nav>
+    </header>
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+    <footer>
+        <p>© 2024 HealthApp. All rights reserved.</p>
+    </footer>
+</body>
+</html>

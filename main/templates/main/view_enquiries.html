@@ -1,0 +1,27 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+    <div class="enquiries-container">
+        <h2 class="enquiries-title">Received Enquiries</h2>
+        <div class="enquiries-list">
+            {% for enquiry in enquiries %}
+                <div class="enquiry-item">
+                    <p><strong>From:</strong> {{ enquiry.patient.username }}</p>
+                    <p><strong>Message:</strong> {{ enquiry.message }}</p>
+                    {% if enquiry.response %}
+                        <p><strong>Response:</strong> {{ enquiry.response }}</p>
+                    {% else %}
+                        <form method="post" class="response-form">
+                            {% csrf_token %}
+                            <input type="hidden" name="enquiry_id" value="{{ enquiry.id }}">
+                            <div class="form-fields">
+                                {{ enquiry.form.as_p }}
+                            </div>
+                            <button type="submit" class="submit-btn">Respond</button>
+                        </form>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

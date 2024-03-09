@@ -1,0 +1,14 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+    <div class="appointment-form-container">
+        <h2 class="form-title">Book an Appointment</h2>
+        <form method="post" class="appointment-form">
+            {% csrf_token %}
+            <div class="form-fields">
+                {{ form.as_p }}
+            </div>
+            <button type="submit" class="submit-btn">Book Appointment</button>
+        </form>
+    </div>
+{% endblock %}

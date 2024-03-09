@@ -1,0 +1,22 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+    <div class="appointments-container">
+        <h2 class="appointments-title">My Appointments</h2>
+        <div class="appointments-list">
+            {% for appointment in appointments %}
+                <div class="appointment-item">
+                    <p>
+                        Appointment with <strong>{{ appointment.patient.username }}</strong> on 
+                        {% if appointment.rescheduled_date %}
+                        {{ appointment.rescheduled_date }} at {{ appointment.rescheduled_time }}
+                        {% else %}
+                        {{ appointment.date }} at {{ appointment.time }}
+                        {% endif %}
+                    </p>
+                    <a href="{% url 'update_appointment' appointment.id %}" class="update-link">Update</a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

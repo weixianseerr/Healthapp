@@ -1,0 +1,21 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+    <div class="appointments-container">
+        <h2 class="appointments-title">Your Appointments</h2>
+        <div class="appointments-list">
+            {% for appointment in appointments %}
+                <div class="appointment-item">
+                    <p>
+                        Appointment with Dr. {{ appointment.doctor.username }} on 
+                        {% if appointment.rescheduled_date %}
+                            {{ appointment.rescheduled_date }} at {{ appointment.rescheduled_time }}
+                        {% else %}
+                            {{ appointment.date }} at {{ appointment.time }}
+                        {% endif %}
+                    </p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

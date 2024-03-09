@@ -1,0 +1,42 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+    <div class="home-content">
+        {% if is_authenticated %}
+            <h1 class="welcome-message">Welcome back, {{ request.user.username }}!</h1>
+            <!-- Additional content for logged-in users -->
+        {% else %}
+            <h1 class="welcome-message">Welcome to HealthApp</h1>
+            <p class="auth-prompt">Please <a href="{% url 'login' %}">login</a> or <a href="{% url 'register' %}">register</a>.</p>
+            <!-- Additional content for guests -->
+        {% endif %}
+
+        <!-- Medical News Section -->
+        <section class="medical-news-section">
+            <h2 class="section-title">Latest Medical News</h2>
+            <div class="medical-news">
+                {% for news_item in medical_news %}
+                    <article class="news-item">
+                        <h3>{{ news_item.title }}</h3>
+                        <p>{{ news_item.content }}</p>
+                        <time datetime="{{ news_item.date }}">{{ news_item.date }}</time>
+                    </article>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- Latest Donations Section -->
+        <section class="donations-section">
+            <h2 class="section-title">Latest Donations</h2>
+            <div class="latest-donations">
+                {% for donation in latest_donations %}
+                    <div class="donation-item">
+                        <strong>Donor:</strong> {{ donation.donor.username|default:"Anonymous" }}
+                        <strong>Amount:</strong> {{ donation.amount_eth }} ETH
+                        <time datetime="{{ donation.timestamp }}">{{ donation.timestamp|date:"Y-m-d H:i" }}</time>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+    </div>
+{% endblock %}
